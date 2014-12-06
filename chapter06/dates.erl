@@ -23,9 +23,8 @@ is_leap_year(Year) -> (Year rem 4 == 0 andalso Year rem 100 /= 0) orelse (Year r
 julian(Date) ->
   [Year, Month, Day] = date_parts(Date),
   DayCounts = [31,28,31,30,31,30,31,31,30,31,30,31],
-  LeapYear = is_leap_year(Year),
-  LeapDay = if
-    LeapYear -> 1;
-    true -> 0
+  LeapDay = case is_leap_year(Year) of
+    true -> 1;
+    false -> 0
   end,
   lists:sum(lists:sublist(DayCounts, Month-1)) + Day + LeapDay.
